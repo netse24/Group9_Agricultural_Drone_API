@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DroneController;
 use App\Http\Controllers\FarmController;
 use App\Http\Controllers\FarmerController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MapController;
 use Illuminate\Http\Request;
@@ -38,5 +39,7 @@ Route::resource('maps', MapController::class);
 Route::resource('provinces', ProvinceController::class);
 
 // Farms
-
 Route::resource('farms', FarmController::class);
+
+// Locations
+Route::resource('locations', LocationController::class);

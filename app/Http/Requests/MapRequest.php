@@ -30,8 +30,8 @@ class MapRequest extends FormRequest
     {
         return [
             'image' =>'required',
-            'drone_id'=>'required|integer',
-            'farm_id'=>'required|integer',
+            'drone_id'=>'required',
+            'farm_id'=>'required',
         ];
     }
 }
