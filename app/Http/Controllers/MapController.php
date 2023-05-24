@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MapRequest;
 use App\Models\Map;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class MapController extends Controller
      */
     public function index()
     {
-        //
+        $maps = Map::all();
+        return response()->json(['status'=>true, 'data'=>$maps],200);
     }
 
     /**
@@ -26,9 +28,14 @@ class MapController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MapRequest $request)
     {
-        //
+        $map = Map::create([
+            'image' => $request->image,
+            'drone_id' => $request->drone_id,
+            'farm_id' => $request->farm_id
+        ]);
+        return response()->json(['status'=>true,'message'=>'Created successfully','data'=>$map],200);
     }
 
     /**
