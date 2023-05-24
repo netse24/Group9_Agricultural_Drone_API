@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -29,7 +30,11 @@ class StoreUserAuthRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:5',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('farmers')->ignore($this->id),
+            ],
             'password' => 'required|string'
         ];
     }
