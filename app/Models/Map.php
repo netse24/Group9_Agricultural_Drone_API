@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Map extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'image',
+        'drone_id',
+        'farm_id',
+    ];
 }
