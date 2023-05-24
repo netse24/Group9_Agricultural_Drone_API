@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Farm;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class FarmerController extends Controller
      */
     public function index()
     {
-        //
+        $farmers = Farmer::all();
+        return response()->json(['success' =>true, 'data' => $farmers],200);
     }
 
     /**
@@ -28,7 +30,7 @@ class FarmerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
