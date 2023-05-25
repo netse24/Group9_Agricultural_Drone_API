@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MapRequest;
-use App\Http\Resources\ProvinceResource;
-use App\Http\Resources\ShowMapResource;
+use App\Http\Resources\MapResource;
+// use App\Http\Resources\ProvinceResource;
+// use App\Http\Resources\ShowMapResource;
+use App\Http\Resources\ShowProvinceResource;
 use App\Models\Map;
 use App\Models\Province;
 use Illuminate\Http\Request;
+
 
 class MapController extends Controller
 {
@@ -46,15 +49,16 @@ class MapController extends Controller
      */
     public function show($province, $id)
     {
-        // $province = Province::where('name', 'like', $province)->first();
-        $maps = Map::all();
-        foreach($maps as $map ){
-            $data =  new ShowMapResource($map);
-            if($data->province->name == $province ){
-                return $map->image;
+        $province = Province::where('name', 'like', $province)->first();
+        $images =  (new ShowProvinceResource($province))->maps;
+        foreach ($images as $image) {
+            if ($image->id === intval($id)) {
+                $new_image = new MapResource($image);
+                return response()->json(['status' => true, 'message' => 'Downloaded successfully', 'data' => $new_image], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Not found'], 401);
             }
         }
-      
     }
 
     /**
@@ -76,8 +80,18 @@ class MapController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Map $map)
+    public function destroy($province, $id)
     {
-        //
+        $province = Province::where('name', 'like', $province)->first();
+        $images =  (new ShowProvinceResource($province))->maps;
+        foreach ($images as $image) {
+            if ($image->id === intval($id)) {
+                $image->image = null;
+                $image->save();
+                return response()->json(['status' => true, 'message' => 'image has removed successfully', $image], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Not found'], 401);
+            }
+        }
     }
 }

@@ -30,13 +30,11 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // DRONES ROUTE 
-    // Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
+    Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
     Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
 
     // Maps
@@ -50,10 +48,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Locations
     Route::resource('locations', LocationController::class);
-    
+
     // Provinces
     Route::resource('provinces', ProvinceController::class);
 });
 
 Route::resource('plans', PlanController::class);
-Route::get('map/{province}/{id}', [MapController::class,'show']);
+// Route::get('maps/{province}/{id}', [MapController::class, 'show']);
+Route::delete('maps/{province}/{id}', [MapController::class, 'destroy']);

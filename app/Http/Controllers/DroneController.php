@@ -56,7 +56,7 @@ class DroneController extends Controller
     {
         $find = Drone::where('drone_name', 'like', $drone_name)->first();
         $drone = new ShowDroneLocationResource($find);
-        return response()->json(['status' => true, 'data' => $drone], 200);
+        return response()->json(['message' => 'Get location success', 'data' => $drone], 200);
     }
     /**
      * Show the form for editing the specified resource.
@@ -66,29 +66,9 @@ class DroneController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(StoreDroneRequest $request, string $id)
-    // {
-    //     $drone = Drone::find($id);
-    //     if ($drone) {
-    //         $drone->update([
-    //             'drone_name' => $request->drone_name,
-    //             'battery' => $request->battery,
-    //             'payload' => $request->payload,
-    //             'farmer_id' => $request->farmer_id,
-    //             'location_id' => $request->location_id
-    //         ]);
-    //         return response()->json(['status' => true, 'message' => "Updated successfully", 'data' => $drone], 200);
-    //     }
-    //     return response()->json(['status' => false, 'message' => 'Not found!'], 404);
-    // }
-    public function update(StoreDroneRequest $request , $drone_name)
+    public function update(StoreDroneRequest $request, $drone_name)
     {
-        // $drone = Drone::find($id);
-        $find = Drone::where('drone_name', 'like', $drone_name)->first();
-        $drone = new ShowDroneLocationResource($find);
+        $drone = Drone::where('drone_name', 'like', $drone_name)->first();
         if ($drone) {
             $drone->update([
                 'drone_name' => $request->drone_name,
