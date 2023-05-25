@@ -30,15 +30,12 @@ class LocationController extends Controller
      */
     public function store(LocationRequest $request)
     {
-<<<<<<< HEAD
         // 
-=======
         $location = Location::create([
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);
         return response()->json(['status'=>true, 'message'=>'Created successfully','data'=>$location],200);
->>>>>>> bade7f7f0cb84aefed38ab4cc9d195777ba15b0a
     }
 
     /**

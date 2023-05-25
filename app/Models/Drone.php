@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Farmer;
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Instruction;
+use App\Models\Map;
 
 class Drone extends Model
 {
@@ -27,5 +30,11 @@ class Drone extends Model
     public function location(): BelongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+    public function instructions():HasMany{
+        return $this->hasMany(Instruction::class);
+    }
+    public function maps():HasMany{
+        return $this->hasMany(Map::class);
     }
 }

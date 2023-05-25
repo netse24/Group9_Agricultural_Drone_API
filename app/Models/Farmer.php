@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Drone;
+use App\Models\Farm;
+use App\Models\Plan;
 
 class Farmer extends Model
 {
@@ -46,5 +49,8 @@ class Farmer extends Model
     public function plans(): HasMany
     {
         return $this->hasMany(Plans::class);
+    }
+    public function farms():HasMany{
+        return $this->hasMany(Farm::class);
     }
 }

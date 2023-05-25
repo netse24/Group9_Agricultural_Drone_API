@@ -28,7 +28,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Farmer 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-<<<<<<< HEAD
 
 
 
@@ -40,11 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
     Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
 });
-=======
-Route::post('/logout', [AuthController::class, 'logout']);
 
-// Drones
-Route::resource('drones', DroneController::class);
 
 // Maps
 Route::resource('maps', MapController::class);
@@ -57,4 +52,3 @@ Route::resource('farms', FarmController::class);
 
 // Locations
 Route::resource('locations', LocationController::class);
->>>>>>> bade7f7f0cb84aefed38ab4cc9d195777ba15b0a
