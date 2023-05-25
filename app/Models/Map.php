@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Drone;
 use App\Models\Farm;
+use App\Models\Province;
 
 class Map extends Model
 {
@@ -18,10 +19,16 @@ class Map extends Model
         'farm_id',
     ];
 
-    public function drone():BelongsTo{
+    public function drone(): BelongsTo
+    {
         return $this->belongsTo(Drone::class);
     }
-    public function farm():BelongsTo{
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class);
+    }
+    public function farm(): BelongsTo
+    {
         return $this->belongsTo(Farm::class);
     }
 }

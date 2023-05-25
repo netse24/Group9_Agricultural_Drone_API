@@ -16,6 +16,7 @@ class Farm extends Model
     use HasFactory;
     
     protected $fillable = [
+        'name',
         'user_id',
         'province_id',
     ];

@@ -50,6 +50,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Locations
     Route::resource('locations', LocationController::class);
+    
+    // Provinces
+    Route::resource('provinces', ProvinceController::class);
 });
 
 Route::resource('plans', PlanController::class);
+Route::get('map/{province}/{id}', [MapController::class,'show']);

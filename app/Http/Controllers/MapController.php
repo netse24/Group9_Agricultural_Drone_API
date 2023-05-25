@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MapRequest;
+use App\Http\Resources\ProvinceResource;
+use App\Http\Resources\ShowMapResource;
 use App\Models\Map;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
 class MapController extends Controller
@@ -14,7 +17,7 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        return response()->json(['status'=>true, 'data'=>$maps],200);
+        return response()->json(['status' => true, 'data' => $maps], 200);
     }
 
     /**
@@ -35,15 +38,23 @@ class MapController extends Controller
             'drone_id' => $request->drone_id,
             'farm_id' => $request->farm_id
         ]);
-        return response()->json(['status'=>true,'message'=>'Created successfully','data'=>$map],200);
+        return response()->json(['status' => true, 'message' => 'Created successfully', 'data' => $map], 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Map $map)
+    public function show($province, $id)
     {
-        //
+        // $province = Province::where('name', 'like', $province)->first();
+        $maps = Map::all();
+        foreach($maps as $map ){
+            $data =  new ShowMapResource($map);
+            if($data->province->name == $province ){
+                return $map->image;
+            }
+        }
+      
     }
 
     /**

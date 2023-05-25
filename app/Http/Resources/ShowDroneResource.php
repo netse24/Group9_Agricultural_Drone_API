@@ -19,7 +19,7 @@ class ShowDroneResource extends JsonResource
             'drone_name' => $this->drone_name,
             'battery' => $this->battery,
             'payload' => $this->payload,
-            'longToFamer' => new FarmerResource($this->farmer),
+            'user' => new UserResource($this->user),
             'location' => new  LocationResource($this->location)
         ];
     }
