@@ -22,7 +22,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('API Token')->plainTextToken;
             return response()->json([
-                'message'=>'login successfully',
+                'message' => 'login successfully',
                 'user' => $user,
                 'token' => $token
             ]);
@@ -33,22 +33,19 @@ class AuthController extends Controller
     }
     public function register(StoreUserAuthRequest $request)
     {
-        $farmer = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
-        $token = $farmer->createToken('FARMER TOKEN')->plainTextToken;
+        $token = $user->createToken('FARMER TOKEN')->plainTextToken;
 
         return response()->json([
-            'farmer' => $farmer,
+            'farmer' => $user,
             'token' => $token,
         ]);
     }
-
-
-
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

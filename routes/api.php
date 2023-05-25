@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DroneController;
 use App\Http\Controllers\FarmController;
-use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MapController;
@@ -38,21 +37,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // DRONES ROUTE 
     Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
     Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
+
+    // Maps
+    Route::resource('maps', MapController::class);
+
+    // Provinces
+    Route::resource('provinces', ProvinceController::class);
+
+    // Farms
+    Route::resource('farms', FarmController::class);
+
+    // Locations
+    Route::resource('locations', LocationController::class);
 });
-<<<<<<< HEAD
-Route::post('/logout', [AuthController::class, 'logout']);
-=======
->>>>>>> 98de93fe48fbdf2d40a322c31b12e40173a1677f
-
-
-// Maps
-Route::resource('maps', MapController::class);
-
-// Provinces
-Route::resource('provinces', ProvinceController::class);
-
-// Farms
-Route::resource('farms', FarmController::class);
-
-// Locations
-Route::resource('locations', LocationController::class);
