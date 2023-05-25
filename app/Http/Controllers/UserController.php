@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Farm;
-use App\Models\Farmer;
 use Illuminate\Http\Request;
 
-class FarmerController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $farmers = Farmer::all();
-        return response()->json(['success' =>true, 'data' => $farmers],200);
+        //
     }
 
     /**
@@ -30,13 +27,13 @@ class FarmerController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Farmer $farmer)
+    public function show(string $id)
     {
         //
     }
@@ -44,7 +41,7 @@ class FarmerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Farmer $farmer)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +49,7 @@ class FarmerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Farmer $farmer)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +57,7 @@ class FarmerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Farmer $farmer)
+    public function destroy(string $id)
     {
         //
     }

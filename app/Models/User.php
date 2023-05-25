@@ -4,9 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Drone;
+use App\Models\Plan;
+use App\Models\Farm;
+
 
 class User extends Authenticatable
 {
@@ -42,4 +47,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function drones():HasMany
+    {
+        return $this->hasMany(Drone::class);
+    }
+
+    public function plans(): HasMany
+    {
+        return $this->hasMany(Plans::class);
+    }
+    public function farms():HasMany{
+        return $this->hasMany(Farm::class);
+    }
+
 }

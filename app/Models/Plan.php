@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Instruction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Farmer;
+use App\Models\User;
 
 class Plan extends Model
 {
@@ -17,12 +17,12 @@ class Plan extends Model
         'type_job',
         'date_time',
         'area',
-        'farmer_id',
+        'user_id',
     ];
     public function instructions():HasMany{
         return $this->hasMany(Instruction::class);
     }
-    public function farmer():BelongsTo{
-        return $this->belongsTo(Farmer::class);
+    public function user():BelongsTo{
+        return $this->belongsTo(User::class);
     }
 }
