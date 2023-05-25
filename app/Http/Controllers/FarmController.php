@@ -31,7 +31,8 @@ class FarmController extends Controller
     public function store(FarmRequest $request)
     {
         $farm = Farm::create([
-            'farmer_id' => $request->farmer_id,
+            'name' => $request->name,
+            'user_id' => $request->user_id,
             'province_id' =>$request->province_id,
         ]);
         return response()->json(['status'=>true,'message'=>'Created successfully' ,'data'=>$farm],200);

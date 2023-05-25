@@ -32,7 +32,7 @@ class StoreDroneRequest extends FormRequest
             'drone_name' => 'required',
             'battery' => 'required',
             'payload' => 'required',
-            'farmer_id' => 'required',
+            'user_id' => 'required',
             'location_id' => 'required',
         ];
     }

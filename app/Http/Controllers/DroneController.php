@@ -6,8 +6,7 @@ use App\Http\Requests\StoreDroneRequest;
 use App\Http\Resources\ShowDroneLocationResource;
 use App\Http\Resources\ShowDroneResource;
 use App\Models\Drone;
-use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
+
 
 class DroneController extends Controller
 {
@@ -37,7 +36,7 @@ class DroneController extends Controller
             'drone_name' => $request->drone_name,
             'battery' => $request->battery,
             'payload' => $request->payload,
-            'farmer_id' => $request->farmer_id,
+            'user_id' => $request->user_id,
             'location_id' => $request->location_id
         ]);
         return response()->json(['status' => true, 'message' => 'Created successfully', 'data' => $drone], 200);

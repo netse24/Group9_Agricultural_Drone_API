@@ -28,7 +28,8 @@ class FarmRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'farmer_id'=>'required',
+            'name'=>'required',
+            'user_id'=>'required',
             'province_id'=>'required',
         ];
     }
