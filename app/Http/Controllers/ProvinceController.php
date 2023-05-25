@@ -39,9 +39,10 @@ class ProvinceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Province $province)
+    public function show($province_name)
     {
-        //
+        $province = Province::where('name','like', $province_name)->first();
+        return response()->json(['status'=>true, 'data'=>$province],200);
     }
 
     /**
