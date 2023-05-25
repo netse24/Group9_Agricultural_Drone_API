@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreDroneRequest extends FormRequest
+class ProvinceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,19 +21,14 @@ class StoreDroneRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(['status' => false, 'message' => $validator->errors()], 412));
+        throw new HttpResponseException(response()->json(['status' =>false, 'message' =>$validator->errors()],412));
     }
     public function rules(): array
     {
         return [
-            'drone_name' => 'required',
-            'battery' => 'required',
-            'payload' => 'required',
-            'farmer_id' => 'required',
-            'location_id' => 'required',
+            'name' => 'required',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProvinceRequest;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        //
+        $province = Province::all();
+        return response()->json(['status'=>true, 'data'=>$province],200);
     }
 
     /**
@@ -26,9 +28,12 @@ class ProvinceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProvinceRequest $request)
     {
-        //
+        $province = Province::create([
+            'name' => $request->name,
+        ]);
+        return response()->json(['status'=>true, 'message'=>'Created successfully', 'data'=>$province],200);
     }
 
     /**
