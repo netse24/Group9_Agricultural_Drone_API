@@ -3,22 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\StoreUserAuthRequest;
 use App\Models\Farmer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use \Illuminate\Foundation\Auth\AuthenticatesUsers;
-
 
 // use App\Http\Requests\StoreUserAuthRequest;
 
 class AuthController extends Controller
 {
-    //TODO register user table 
+    //TODO register user table
 
-    
-    public function register(AuthRequest $request)
+    public function login(AuthRequest $request)
     {
-        $farmer = Farmer::create([
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('API Token')->plainTextToken;
+            return response()->json([
+                'message'=>'login successfully',
+                'user' => $user,
+                'token' => $token
+            ]);
+        }
+        return response()->json([
+            'message' => 'Invalid credentials'
+        ], 401);
+    }
+    public function register(StoreUserAuthRequest $request)
+    {
+        $farmer = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
@@ -31,6 +46,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
 
 
     public function logout(Request $request)
