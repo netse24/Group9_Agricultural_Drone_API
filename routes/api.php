@@ -21,13 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Farmer 
 Route::post('/register', [AuthController::class, 'register']);
-<<<<<<< HEAD
-
-// DRONES
-
-Route::resource('drones', DroneController::class);
-=======
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
->>>>>>> 15c52a27ca03a4278d39b10e414631131eb20ae2
+
+
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    // DRONES ROUTE 
+    Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
+    Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
+});

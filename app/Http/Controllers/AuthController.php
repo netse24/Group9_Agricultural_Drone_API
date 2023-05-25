@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserAuthRequest;
+use App\Http\Requests\AuthRequest;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+
+// use App\Http\Requests\StoreUserAuthRequest;
 
 class AuthController extends Controller
 {
     //TODO register user table 
 
-    public function register(StoreUserAuthRequest $request)
+    
+    public function register(AuthRequest $request)
     {
         $farmer = Farmer::create([
             'name' => $request->name,
@@ -27,22 +32,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(StoreUserAuthRequest $request)
-    {
-        $credentials = $request->only('name', 'email', 'password');
-        if (Auth::attempt($credentials)) {
-            $farmer = Auth::user();
-
-            $token = $farmer->createToken('FARMER Token')->plainTextToken;
-            return response()->json([
-                'farmer' => $farmer,
-                'token' => $token
-            ]);
-        };
-        return response()->json([
-            'message' => 'Invalid field'
-        ], 401);
-    }
 
     public function logout(Request $request)
     {

@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Farmer extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -36,4 +37,14 @@ class Farmer extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function drones(): HasMany
+    {
+        return $this->hasMany(Drone::class);
+    }
+
+    public function plans(): HasMany
+    {
+        return $this->hasMany(Plans::class);
+    }
 }

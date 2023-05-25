@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDroneRequest;
+use App\Http\Resources\ShowDroneLocationResource;
+use App\Http\Resources\ShowDroneResource;
 use App\Models\Drone;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
 
 class DroneController extends Controller
 {
@@ -37,7 +40,7 @@ class DroneController extends Controller
             'farmer_id' => $request->farmer_id,
             'location_id' => $request->location_id
         ]);
-        return response()->json(['status' => true, 'message' => 'Created successfully', 'data'=>$drone], 200);
+        return response()->json(['status' => true, 'message' => 'Created successfully', 'data' => $drone], 200);
     }
 
     /**
@@ -45,10 +48,17 @@ class DroneController extends Controller
      */
     public function show($drone_name)
     {
-        $drone = Drone::where('drone_name', 'like', $drone_name)->first();
-        return response()->json(['status' => true, 'message' => $drone], 200);
+        $find = Drone::where('drone_name', 'like', $drone_name)->first();
+        $drone = new ShowDroneResource($find);
+        return response()->json(['status' => true, 'data' => $drone], 200);
     }
 
+    public function showDroneLocation($drone_name)
+    {
+        $find = Drone::where('drone_name', 'like', $drone_name)->first();
+        $drone = new ShowDroneLocationResource($find);
+        return response()->json(['status' => true, 'data' => $drone], 200);
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -60,10 +70,10 @@ class DroneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,string $id)
+    public function update(StoreDroneRequest $request, string $id)
     {
         $drone = Drone::find($id);
-        if($drone){
+        if ($drone) {
             $drone->update([
                 'drone_name' => $request->drone_name,
                 'battery' => $request->battery,
@@ -71,10 +81,11 @@ class DroneController extends Controller
                 'farmer_id' => $request->farmer_id,
                 'location_id' => $request->location_id
             ]);
-            return response()->json(['status'=>true,'message'=>"Updated successfully", 'data'=>$drone],200);
+            return response()->json(['status' => true, 'message' => "Updated successfully", 'data' => $drone], 200);
         }
-        return response()->json(['status'=>false,'message'=>'Not found!'],404);
+        return response()->json(['status' => false, 'message' => 'Not found!'], 404);
     }
+
 
     /**
      * Remove the specified resource from storage.
