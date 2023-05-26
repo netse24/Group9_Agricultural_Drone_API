@@ -27,20 +27,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Farmer 
+// User 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
+    // User logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // DRONES ROUTE 
-    Route::resource('drones', DroneController::class); // get all drones, get a lcoatin of adrone... 
+    // get all drones, get a lcoatin of adrone... 
+    Route::resource('drones', DroneController::class);
+    // Show drone location
     Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
+    // Get instructions of drone by id
+    Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
 
-    // Maps
+    // MAPS
     Route::resource('maps', MapController::class);
+    // download map image
+    Route::get('maps/{province}/{id}', [MapController::class, 'download']);
+    //delete map image
+    Route::delete('maps/{province}/{id}', [MapController::class, 'destroyImage']);
+    //post map image
+    Route::post('maps/{province}/{id}', [MapController::class, 'updateDroneImage']);
 
     // Provinces
     Route::resource('provinces', ProvinceController::class);
@@ -55,21 +65,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('provinces', ProvinceController::class);
 
     // Instructions
-
     Route::resource('instructions', InstructionController::class);
+    // Update instruction
+    Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
+
+    // plan 
+    Route::resource('plans', PlanController::class);
 });
 
-Route::resource('plans', PlanController::class);
-Route::get('maps/{province}/{id}', [MapController::class, 'download']);
-Route::delete('maps/{province}/{id}', [MapController::class, 'destroyImage']);
-Route::post('maps/{province}/{id}', [MapController::class, 'updateDroneImage']);
+
 
 // Users
 Route::resource('users', UserController::class);
-Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
-
-// Get instructions of drone by id
-Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
 
 // Get province by id
 Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);
