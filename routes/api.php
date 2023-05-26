@@ -60,11 +60,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::resource('plans', PlanController::class);
-// Route::get('maps/{province}/{id}', [MapController::class, 'show']);
+Route::get('maps/{province}/{id}', [MapController::class, 'download']);
 Route::delete('maps/{province}/{id}', [MapController::class, 'destroy']);
 
 // Users
 Route::resource('users', UserController::class);
+Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
 
 // Get instructions of drone by id
 Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);

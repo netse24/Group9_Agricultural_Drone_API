@@ -21,7 +21,7 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        $maps= MapImageResource::collection($maps);
+        $maps = MapImageResource::collection($maps);
         return response()->json(['status' => true, 'data' => $maps], 200);
     }
 
@@ -49,7 +49,7 @@ class MapController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($province, $id)
+    public function download($province, $id)
     {
         $province = Province::where('name', 'like', $province)->first();
         $images =  (new ShowProvinceResource($province))->maps;
