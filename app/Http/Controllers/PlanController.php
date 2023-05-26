@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PlanRequest;
 use App\Http\Resources\PlanResource;
+use App\Http\Resources\ShowPlanResource;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class PlanController extends Controller
     {
         $plans = Plan::all();
         $plans = PlanResource::collection($plans);
-        return response()->json(['status'=>true, 'data'=>$plans],200);
+        return response()->json(['status' => true, 'data' => $plans], 200);
     }
 
     /**
@@ -48,9 +49,11 @@ class PlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Plan $plan)
+    public function show($plan)
     {
-        //
+        $plan = Plan::where('type_job', 'like', $plan)->first();
+        $plan = new  ShowPlanResource($plan);
+        return $plan;
     }
 
     /**

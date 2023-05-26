@@ -65,3 +65,6 @@ Route::delete('maps/{province}/{id}', [MapController::class, 'destroy']);
 
 // Users
 Route::resource('users', UserController::class);
+
+// Get instructions of drone by id
+Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
