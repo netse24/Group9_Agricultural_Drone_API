@@ -3,11 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DroneController;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\InstructionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\UserController;
+use App\Models\Instruction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,8 +57,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::resource('plans', PlanController::class);
-// Route::get('maps/{province}/{id}', [MapController::class, 'show']);
+Route::get('maps/{province}/{id}', [MapController::class, 'download']);
 Route::delete('maps/{province}/{id}', [MapController::class, 'destroy']);
 
 // Users
 Route::resource('users', UserController::class);
+Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);

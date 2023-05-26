@@ -13,6 +13,7 @@ class Instruction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'instruction',
         'drone_id',
         'plan_id',
     ];
