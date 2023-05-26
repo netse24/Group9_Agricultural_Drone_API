@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LocationRequest;
+use App\Http\Resources\LocationResource;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Locale;
 
 class LocationController extends Controller
 {
@@ -14,6 +16,7 @@ class LocationController extends Controller
     public function index()
     {
         $locations = Location::all();
+        $locations = LocationResource::collection($locations);
         return response()->json(['status'=>true, 'data'=>$locations],200);
     }
 
@@ -41,9 +44,14 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Location $location)
+    public function show(string $id)
     {
-        //
+        $location = Location::find($id);
+        if($location){
+            $location = new LocationResource($location);
+            return response()->json(['status'=>true, 'data'=>$location],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Not found location !'],404);
     }
 
     /**
@@ -57,16 +65,28 @@ class LocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Location $location)
+    public function update(LocationRequest $request, string $id)
     {
-        //
+        $location = Location::find($id);
+        if($location){
+            $location->update([
+                'latitude'=>$request->latitude,
+                'longitude'=>$request->longitude
+            ]);
+            return response()->json(['status'=>true, 'message'=>'Updated successfully', 'data'=>$location],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Can not updated !', 'data'=>$location],404);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Location $location)
+    public function destroy(string $id)
     {
-        //
+        $location = Location::find($id);
+        if($location){
+            return response()->json(['status'=>true, 'message'=>'Deleted successfully'],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Can not delete !'],404);
     }
 }
