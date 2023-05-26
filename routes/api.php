@@ -9,7 +9,6 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\UserController;
-use App\Models\Instruction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,3 +70,6 @@ Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class,
 
 // Get instructions of drone by id
 Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
+
+// Get province by id
+Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);
