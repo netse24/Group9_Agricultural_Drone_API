@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MapRequest;
+use App\Http\Resources\MapImageResource;
 use App\Http\Resources\MapResource;
 // use App\Http\Resources\ProvinceResource;
 // use App\Http\Resources\ShowMapResource;
@@ -20,6 +21,7 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
+        $maps= MapImageResource::collection($maps);
         return response()->json(['status' => true, 'data' => $maps], 200);
     }
 

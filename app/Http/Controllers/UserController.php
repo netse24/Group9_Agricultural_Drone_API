@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ShowUserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        $users = ShowUserResource::collection($users);
+        return response()->json(['status'=>true, 'data'=>$users],200);
     }
 
     /**

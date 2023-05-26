@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     public function plans(): HasMany
     {
-        return $this->hasMany(Plans::class);
+        return $this->hasMany(Plan::class);
     }
     public function farms():HasMany{
         return $this->hasMany(Farm::class);
