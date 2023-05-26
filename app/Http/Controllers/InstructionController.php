@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ShowInstructionResource;
 use App\Http\Resources\DroneResource;
 use App\Http\Resources\InstructionResource;
 use App\Http\Resources\ShowDroneIntructionResource;
@@ -17,7 +18,9 @@ class InstructionController extends Controller
      */
     public function index()
     {
-        //
+        $instructions = Instruction::all();
+        $instructions = ShowInstructionResource::collection($instructions);
+        return response()->json(['status'=>true, 'data'=>$instructions],200);
     }
 
     /**

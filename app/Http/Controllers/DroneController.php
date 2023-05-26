@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDroneRequest;
+use App\Http\Resources\InstructionDroneResource;
 use App\Http\Resources\ShowDroneLocationResource;
 use App\Http\Resources\ShowDroneResource;
 use App\Models\Drone;
@@ -50,6 +51,15 @@ class DroneController extends Controller
         $find = Drone::where('drone_name', 'like', $drone_name)->first();
         $drone = new ShowDroneResource($find);
         return response()->json(['status' => true, 'data' => $drone], 200);
+    }
+    
+    public function showInstructions(string $id){
+        $drone = Drone::find($id);
+        if ($drone){
+            $drone = new InstructionDroneResource($drone);
+            return response()->json(['status' => true, 'data' =>$drone], 200);
+        }
+        return response()->json(['status' => false, 'message' =>'Not found !'], 404);
     }
 
     public function showDroneLocation($drone_name)
