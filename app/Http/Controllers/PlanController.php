@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlanRequest;
+use App\Http\Resources\PlanResource;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class PlanController extends Controller
     public function index()
     {
         $plans = Plan::all();
-        return $plans;
+        $plans = PlanResource::collection($plans);
+        return response()->json(['status'=>true, 'data'=>$plans],200);
     }
 
     /**
