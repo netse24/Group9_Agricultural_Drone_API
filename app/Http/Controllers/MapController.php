@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MapRequest;
 use App\Http\Resources\MapImageResource;
 use App\Http\Resources\MapResource;
-// use App\Http\Resources\ProvinceResource;
-// use App\Http\Resources\ShowMapResource;
 use App\Http\Resources\ShowProvinceResource;
 use App\Models\Map;
 use App\Models\Province;
@@ -74,15 +72,25 @@ class MapController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Map $map)
+    public function updateDroneImage($province,  $img_id, Request $request)
     {
-        //
+        $province = Province::where('name', 'like', $province)->first();
+        $images =  (new ShowProvinceResource($province))->maps;
+        foreach ($images as $image) {
+            if ($image->id === intval($img_id)) {
+                $image->image = $request->image;
+                $image->save();
+                return response()->json(['status' => true, 'message' => 'image has created successfully', $image], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Not found'], 401);
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($province, $id)
+    public function destroyImage($province, $id)
     {
         $province = Province::where('name', 'like', $province)->first();
         $images =  (new ShowProvinceResource($province))->maps;

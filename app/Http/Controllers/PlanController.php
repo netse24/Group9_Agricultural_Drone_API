@@ -41,9 +41,9 @@ class PlanController extends Controller
         ]);
 
         return response()->json([
-            'status' => 'success',
+            'status' => 'create plan successfully',
             'data' => $plan
-        ]);
+        ], 200);
     }
 
     /**
@@ -53,7 +53,7 @@ class PlanController extends Controller
     {
         $plan = Plan::where('type_job', 'like', $plan)->first();
         $plan = new  ShowPlanResource($plan);
-        return $plan;
+        return response()->json(['message' => 'Success', 'data' => $plan], 200);
     }
 
     /**
