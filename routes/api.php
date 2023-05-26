@@ -68,3 +68,6 @@ Route::resource('users', UserController::class);
 
 // Get instructions of drone by id
 Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
+
+// Get province by id
+Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);

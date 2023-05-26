@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProvinceRequest;
+use App\Http\Resources\ProvinceResource;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,9 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        $province = Province::all();
-        return response()->json(['status'=>true, 'data'=>$province],200);
+        $provinces = Province::all();
+        $provinces = ProvinceResource::collection($provinces);
+        return response()->json(['status'=>true, 'data'=>$provinces],200);
     }
 
     /**
@@ -46,6 +48,17 @@ class ProvinceController extends Controller
     }
 
     /**
+     * Display the specified province by id
+     */
+    public function showById($province_id){
+        $province = Province::find($province_id);
+        if ($province){
+            $province = new ProvinceResource($province);
+            return response()->json(['status'=>true, 'data'=>$province],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Province not found'],404);
+    }
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Province $province)
@@ -56,16 +69,27 @@ class ProvinceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Province $province)
+    public function update(ProvinceRequest $request, string $id)
     {
-        //
+        $province = Province::find($id);
+        if ($province){
+            $province->update([
+                'name'=>$request->name,
+            ]);
+            return response()->json(['status'=>true, 'message'=>'Update successfully','data'=>$province],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Can not update !'],404);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Province $province)
+    public function destroy(string $id)
     {
-        //
+        $province = Province::find($id);
+        if ($province){
+            return response()->json(['status'=>true, 'message'=>"Deleted successfully"],200);
+        }
+        return response()->json(['status'=>false, 'message'=>"Can not delete !"],404);
     }
 }
