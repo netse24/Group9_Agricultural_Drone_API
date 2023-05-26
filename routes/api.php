@@ -72,3 +72,6 @@ Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']
 
 // Get province by id
 Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);
+
+// Get plan by id
+Route::get('/getPlan/{id}', [PlanController::class, 'showPlanBy']);

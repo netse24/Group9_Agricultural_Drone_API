@@ -57,6 +57,18 @@ class PlanController extends Controller
     }
 
     /**
+     * Display the specified plan by id
+     */
+
+    public function showPlanBy($id){
+        $plan = Plan::find($id);
+        if($plan){
+            $plan = new PlanResource($plan);
+            return response()->json(['status'=>true, 'data'=>$plan],200);
+        }
+        return response()->json(['status'=>false, 'message'=>'Not found !'],404);
+    }
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Plan $plan)
@@ -67,16 +79,30 @@ class PlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Plan $plan)
+    public function update(PlanRequest $request, string $id)
     {
-        //
+        $plan = Plan::find($id);
+        if($plan){
+            $plan->update([
+                'type_job'=>$request->type_job,
+                'date_time'=>$request->date_time,
+                'area'=>$request->area,
+                'user_id'=>$request->user_id
+            ]);
+            return response()->json(['status' =>true, 'message'=>'Updated successfully','data' => $plan],200);
+        }
+        return response()->json(['status' =>false, 'message' => 'Can not update !'],404);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(string $id)
     {
-        //
+        $plan = Plan::find($id);
+        if($plan){
+            return response()->json(['status' =>true, 'message'=>'Deleted successfully'],200);
+        }
+        return response()->json(['status' =>false, 'message'=>'Can not delete'],404);
     }
 }
