@@ -20,7 +20,7 @@ class InstructionController extends Controller
     {
         $instructions = Instruction::all();
         $instructions = ShowInstructionResource::collection($instructions);
-        return response()->json(['status'=>true, 'data'=>$instructions],200);
+        return response()->json(['status' => true, 'data' => $instructions], 200);
     }
 
     /**
@@ -68,13 +68,26 @@ class InstructionController extends Controller
         $instructions  =    (new ShowDroneIntructionResource($drone))->instructions;
         foreach ($instructions as $instruction) {
             if ($instruction->id === intVal($id)) {
-                $instruction = (new ShowOnlyIntructionResource($instruction));
+                $instruction = new ShowOnlyIntructionResource($instruction);
                 $instruction['instruction'] = $request->instruction;
                 $instruction->save();
-                return $instruction;
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'successfully',
+                        'data updated' => $instruction
+                    ],
+                    200
+                );
             }
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'not found',
+                ],
+                401
+            );
         }
-        return $instructions;
     }
 
     /**

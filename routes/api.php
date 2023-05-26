@@ -62,7 +62,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::resource('plans', PlanController::class);
 Route::get('maps/{province}/{id}', [MapController::class, 'download']);
-Route::delete('maps/{province}/{id}', [MapController::class, 'destroy']);
+Route::delete('maps/{province}/{id}', [MapController::class, 'destroyImage']);
+Route::post('maps/{province}/{id}', [MapController::class, 'updateDroneImage']);
 
 // Users
 Route::resource('users', UserController::class);
