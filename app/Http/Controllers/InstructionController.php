@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\InstructionResource;
 use App\Models\Instruction;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class InstructionController extends Controller
      */
     public function index()
     {
-        //
+        $instructions = Instruction::all();
+        $instructions = InstructionResource::collection($instructions);
+        return response()->json(['status'=>true, 'data'=>$instructions],200);
     }
 
     /**

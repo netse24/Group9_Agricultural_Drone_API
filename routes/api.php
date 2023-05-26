@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DroneController;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\InstructionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MapController;
@@ -52,6 +53,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Provinces
     Route::resource('provinces', ProvinceController::class);
+
+    // Instructions
+
+    Route::resource('instructions', InstructionController::class);
 });
 
 Route::resource('plans', PlanController::class);
