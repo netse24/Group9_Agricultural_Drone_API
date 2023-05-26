@@ -47,6 +47,18 @@ class MapController extends Controller
     /**
      * Display the specified resource.
      */
+    public function show(string $id){
+        $map = Map::find($id);
+        if($map){
+            $map = new MapResource($map);
+            return response()->json(['status' => true, 'data' =>$map], 200);
+        }
+        return response()->json(['status' => false, 'message' =>'Not found map !'], 404);
+    }
+
+    /**
+     * 
+     */
     public function download($province, $id)
     {
         $province = Province::where('name', 'like', $province)->first();
@@ -60,6 +72,7 @@ class MapController extends Controller
             }
         }
     }
+
 
     /**
      * Show the form for editing the specified resource.
