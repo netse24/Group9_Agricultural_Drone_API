@@ -17,7 +17,7 @@ class PlanController extends Controller
     {
         $plans = Plan::all();
         $plans = PlanResource::collection($plans);
-        return response()->json(['status' => true, 'data' => $plans], 200);
+        return response()->json(['status' => true, 'message'=>'Get plans succefully!','data' => $plans], 200);
     }
 
     /**

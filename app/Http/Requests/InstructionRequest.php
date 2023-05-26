@@ -30,8 +30,8 @@ class InstructionRequest extends FormRequest
     {
         return [
             'instruction'=>'required|string',
-            'drone_id'=>'required|string',
-            'plan_id'=>'required|string'
+            'drone_id'=>'required|integer',
+            'plan_id'=>'required|integer',
         ];
     }
 }

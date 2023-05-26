@@ -66,7 +66,7 @@ class DroneController extends Controller
     {
         $find = Drone::where('drone_name', 'like', $drone_name)->first();
         $drone = new ShowDroneLocationResource($find);
-        return response()->json(['message' => 'Get location success', 'data' => $drone], 200);
+        return response()->json(['message' => 'Get location successfully', 'data' => $drone], 200);
     }
     /**
      * Show the form for editing the specified resource.

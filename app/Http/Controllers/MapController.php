@@ -20,7 +20,7 @@ class MapController extends Controller
     {
         $maps = Map::all();
         $maps = MapImageResource::collection($maps);
-        return response()->json(['status' => true, 'data' => $maps], 200);
+        return response()->json(['status' => true,'message'=>'Get images successfully!', 'data' => $maps], 200);
     }
 
     /**
@@ -39,9 +39,10 @@ class MapController extends Controller
         $map = Map::create([
             'image' => $request->image,
             'drone_id' => $request->drone_id,
-            'farm_id' => $request->farm_id
+            'farm_id' => $request->farm_id,
+            'province_id' => $request->province_id,
         ]);
-        return response()->json(['status' => true, 'message' => 'Created successfully', 'data' => $map], 200);
+        return response()->json(['status' => true, 'message' => 'Created map successfully!', 'data' => $map], 200);
     }
 
     /**
@@ -66,7 +67,7 @@ class MapController extends Controller
         foreach ($images as $image) {
             if ($image->id === intval($id)) {
                 $new_image = new MapResource($image);
-                return response()->json(['status' => true, 'message' => 'Downloaded successfully', 'data' => $new_image], 200);
+                return response()->json(['status' => true, 'message' => 'Downloaded image successfully', 'data' => $new_image], 200);
             } else {
                 return response()->json(['status' => false, 'message' => 'Not found'], 401);
             }
@@ -93,7 +94,7 @@ class MapController extends Controller
             if ($image->id === intval($img_id)) {
                 $image->image = $request->image;
                 $image->save();
-                return response()->json(['status' => true, 'message' => 'image has created successfully', $image], 200);
+                return response()->json(['status' => true, 'message' => 'Image has created successfully', $image], 200);
             } else {
                 return response()->json(['status' => false, 'message' => 'Not found'], 401);
             }
@@ -111,7 +112,7 @@ class MapController extends Controller
             if ($image->id === intval($id)) {
                 $image->image = null;
                 $image->save();
-                return response()->json(['status' => true, 'message' => 'image has removed successfully', $image], 200);
+                return response()->json(['status' => true, 'message' => 'Image has removed successfully', $image], 200);
             } else {
                 return response()->json(['status' => false, 'message' => 'Not found'], 401);
             }

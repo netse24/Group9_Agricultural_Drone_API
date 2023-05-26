@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InstructionRequest;
 use App\Http\Resources\ShowInstructionResource;
 use App\Http\Resources\DroneResource;
 use App\Http\Resources\InstructionResource;
@@ -20,7 +21,7 @@ class InstructionController extends Controller
     {
         $instructions = Instruction::all();
         $instructions = ShowInstructionResource::collection($instructions);
-        return response()->json(['status' => true, 'data' => $instructions], 200);
+        return response()->json(['status' => true,'Get instructions successfully!', 'data' => $instructions], 200);
     }
 
     /**
@@ -34,17 +35,27 @@ class InstructionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(InstructionRequest $request)
     {
-        //
+        $instruction = Instruction::create([
+            'instruction'=>$request->instruction,
+            'drone_id'=>$request->drone_id,
+            'plan_id'=>$request->plan_id
+        ]);
+        return response()->json(['status' => true,'message'=>'Created instruction successfully!', 'data'=>$instruction],200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Instruction $instruction)
+    public function show(string $id)
     {
-        //
+        $instruction = Instruction::find($id);
+        if($instruction){
+            $instruction= new InstructionResource($instruction);
+            return response()->json(['status' =>true, 'data'=>$instruction],200);
+        }
+        return response()->json(['status' =>false, 'message'=>'Not found instruction!'],404);
     }
 
     /**
@@ -74,7 +85,7 @@ class InstructionController extends Controller
                 return response()->json(
                     [
                         'status' => true,
-                        'message' => 'successfully',
+                        'message' => 'Updated instruction successfully',
                         'data updated' => $instruction
                     ],
                     200

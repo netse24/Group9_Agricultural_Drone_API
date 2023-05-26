@@ -32,6 +32,7 @@ class MapRequest extends FormRequest
             'image' =>'required',
             'drone_id'=>'required',
             'farm_id'=>'required',
+            'province_id'=>'required',
         ];
     }
 }

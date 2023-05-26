@@ -17,6 +17,7 @@ class Map extends Model
         'image',
         'drone_id',
         'farm_id',
+        'province_id',
     ];
 
     public function drone(): BelongsTo
