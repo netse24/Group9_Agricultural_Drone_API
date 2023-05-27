@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FarmRequest;
+use App\Http\Resources\FarmResource;
 use App\Models\Farm;
-use Illuminate\Http\Request;
-
 class FarmController extends Controller
 {
     /**
@@ -14,7 +13,8 @@ class FarmController extends Controller
     public function index()
     {
         $farms = Farm::all();
-        return response()->json(['status'=>true, 'data'=>$farms],200);
+        $farms = FarmResource::collection($farms);
+        return response()->json(['status'=>true,'message'=>'Get farms successfully !' ,'data'=>$farms],200);
     }
 
     /**
@@ -35,15 +35,20 @@ class FarmController extends Controller
             'user_id' => $request->user_id,
             'province_id' =>$request->province_id,
         ]);
-        return response()->json(['status'=>true,'message'=>'Created successfully' ,'data'=>$farm],200);
+        return response()->json(['status'=>true,'message'=>'Created farm successfully' ,'data'=>$farm],200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Farm $farm)
+    public function show(string $id)
     {
-        //
+        $farm = Farm::find($id);
+        if($farm){
+            $farm= new FarmResource($farm);
+            return response()->json(['status'=>true,'message'=>'Get specific farm successfully !' ,'data'=>$farm],200);
+        }
+        return response()->json(['status'=>false,'message'=>'Not found farm !'],404);
     }
 
     /**
@@ -57,16 +62,30 @@ class FarmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Farm $farm)
+    public function update(FarmRequest $request, string $id)
     {
-        //
+        $farm = Farm::find($id);
+        if($farm){
+            $farm->update([
+                'name'=>$request->name,
+                'province_id'=>$request->province_id,
+                'user_id'=>$request->user_id
+            ]);
+            return response()->json(['status'=>true,'message'=>'Updated farm successfully !', 'data'=>$farm],200);
+        }
+        return response()->json(['status'=>false,'message'=>'Not found !'],404);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Farm $farm)
+    public function destroy(string $id)
     {
-        //
+        $farm = Farm::find($id);
+        if($farm){
+            $farm->delete($farm);
+            return response()->json(['status'=>true,'message'=>'Deleted farm successfully !'],200);
+        }
+        return response()->json(['status'=>false,'message'=>'Not found !'],404);
     }
 }

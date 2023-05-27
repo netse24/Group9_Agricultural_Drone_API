@@ -15,9 +15,10 @@ class FarmResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'name' => $this->name,
-            'province_id' => $this->province_id,
-            'user_id' => $this->user_id,
+            'province_id' =>new ProvinceResource($this->province),
+            'user_id' => new UserResource($this->user)
         ];
     }
 }
