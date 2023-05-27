@@ -15,8 +15,9 @@ class MapImageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'image'=>$this->image,
-            'drone'=>$this->drone->drone_name,
+            'id' => $this->id,
+            'image' => $this->image,
+            'drone' => $this->drone->drone_name,
         ];
     }
 }

@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //delete map image
     Route::delete('maps/{province}/{id}', [MapController::class, 'destroyImage']);
     //post map image
-    Route::post('maps/{province}/{id}', [MapController::class, 'updateDroneImage']);
+    Route::post('maps/{province}/{id}', [MapController::class, 'addDroneImage']);
 
     // PROVINCES
     Route::resource('provinces', ProvinceController::class);
