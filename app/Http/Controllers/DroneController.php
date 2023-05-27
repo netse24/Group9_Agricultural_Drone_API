@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDroneRequest;
 use App\Http\Resources\DroneResource;
 use App\Http\Resources\InstructionDroneResource;
+use App\Http\Resources\ShowDroneIntructionResource;
 use App\Http\Resources\ShowDroneLocationResource;
 use App\Http\Resources\ShowDroneResource;
+use App\Http\Resources\ShowInstructionDroneResource;
 use App\Models\Drone;
 
 
@@ -60,7 +62,7 @@ class DroneController extends Controller
     public function showInstructions(string $id){
         $drone = Drone::find($id);
         if ($drone){
-            $drone = new InstructionDroneResource($drone);
+            $drone = new ShowInstructionDroneResource($drone);
             return response()->json(['status' => true,'message'=>'Get instructions by drone id', 'data' =>$drone], 200);
         }
         return response()->json(['status' => false, 'message' =>'Not found!'], 404);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InstructionRequest;
 use App\Http\Resources\ShowInstructionResource;
 use App\Http\Resources\InstructionResource;
-use App\Http\Resources\ShowDroneIntructionResource;
+use App\Http\Resources\ShowDroneInstructionResource;
 use App\Http\Resources\ShowOnlyIntructionResource;
 use App\Models\Drone;
 use App\Models\Instruction;
@@ -87,7 +87,7 @@ class InstructionController extends Controller
     public function updateInstruction($drone, $id, Request $request)
     {
         $drone  =  Drone::where('drone_name', 'like', $drone)->first();
-        $instructions  =    (new ShowDroneIntructionResource($drone))->instructions;
+        $instructions  =    (new ShowDroneInstructionResource($drone))->instructions;
         foreach ($instructions as $instruction) {
             if ($instruction->id === intVal($id)) {
                 $instruction = new ShowOnlyIntructionResource($instruction);
