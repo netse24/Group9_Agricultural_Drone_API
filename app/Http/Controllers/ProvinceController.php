@@ -88,6 +88,7 @@ class ProvinceController extends Controller
     {
         $province = Province::find($id);
         if ($province){
+            $province->delete($province);
             return response()->json(['status'=>true, 'message'=>"Deleted successfully"],200);
         }
         return response()->json(['status'=>false, 'message'=>"Can not delete !"],404);

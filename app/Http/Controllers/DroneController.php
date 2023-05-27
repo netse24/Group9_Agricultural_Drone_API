@@ -17,7 +17,7 @@ class DroneController extends Controller
     public function index()
     {
         $drones = Drone::all();
-        return response()->json(['status' => true, 'data' => $drones], 200);
+        return response()->json(['status' => true,'message'=>'Get drones succesfully! ', 'data' => $drones], 200);
     }
 
     /**
@@ -40,7 +40,7 @@ class DroneController extends Controller
             'user_id' => $request->user_id,
             'location_id' => $request->location_id
         ]);
-        return response()->json(['status' => true, 'message' => 'Created successfully', 'data' => $drone], 200);
+        return response()->json(['status' => true, 'message' => 'Created drone successfully', 'data' => $drone], 200);
     }
 
     /**
@@ -52,7 +52,9 @@ class DroneController extends Controller
         $drone = new ShowDroneResource($find);
         return response()->json(['status' => true, 'data' => $drone], 200);
     }
-    
+    /**
+     * Display instructions by drone id 
+     */
     public function showInstructions(string $id){
         $drone = Drone::find($id);
         if ($drone){
@@ -61,12 +63,14 @@ class DroneController extends Controller
         }
         return response()->json(['status' => false, 'message' =>'Not found !'], 404);
     }
-
+    /**
+     * Display location of drone
+     */
     public function showDroneLocation($drone_name)
     {
         $find = Drone::where('drone_name', 'like', $drone_name)->first();
         $drone = new ShowDroneLocationResource($find);
-        return response()->json(['message' => 'Get location successfully', 'data' => $drone], 200);
+        return response()->json(['message' => 'Get location of drone successfully', 'data' => $drone], 200);
     }
     /**
      * Show the form for editing the specified resource.
@@ -75,7 +79,9 @@ class DroneController extends Controller
     {
         //
     }
-
+    /**
+     * Show the form for updating the specified resource
+     */
     public function update(StoreDroneRequest $request, $drone_name)
     {
         $drone = Drone::where('drone_name', 'like', $drone_name)->first();
@@ -87,7 +93,7 @@ class DroneController extends Controller
                 'farmer_id' => $request->farmer_id,
                 'location_id' => $request->location_id
             ]);
-            return response()->json(['status' => true, 'message' => "Updated successfully", 'data' => $drone], 200);
+            return response()->json(['status' => true, 'message' => "Updated drone successfully", 'data' => $drone], 200);
         }
         return response()->json(['status' => false, 'message' => 'Not found!'], 404);
     }
@@ -96,8 +102,13 @@ class DroneController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Drone $drone)
+    public function destroy(string $id)
     {
-        //
+        $drone = Drone::find($id);
+        if($drone){
+            $drone->delete($drone);
+            return response()->json(['status' => true, 'message' =>'Deleted drone successfully'], 200);
+        }
+        return response()->json(['status' => false, 'message' =>'Not found !'], 404);
     }
 }
