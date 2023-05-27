@@ -17,7 +17,7 @@ class PlanController extends Controller
     {
         $plans = Plan::all();
         $plans = PlanResource::collection($plans);
-        return response()->json(['status' => true, 'message'=>'Get plans succefully!','data' => $plans], 200);
+        return response()->json(['status' => true, 'message'=>'Get plans successfully!','data' => $plans], 200);
     }
 
     /**
@@ -40,12 +40,8 @@ class PlanController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        return response()->json([
-            'status' => 'create plan successfully',
-            'data' => $plan
-        ], 200);
+        return response()->json(['status' => 'Created plan successfully!','data' => $plan], 200);
     }
-
     /**
      * Display the specified resource.
      */
@@ -53,7 +49,7 @@ class PlanController extends Controller
     {
         $plan = Plan::where('type_job', 'like', $plan)->first();
         $plan = new  ShowPlanResource($plan);
-        return response()->json(['message' => 'Success', 'data' => $plan], 200);
+        return response()->json(['status'=>true,'message' => 'Get plan by name successfully!', 'data' => $plan], 200);
     }
 
     /**
@@ -64,9 +60,9 @@ class PlanController extends Controller
         $plan = Plan::find($id);
         if($plan){
             $plan = new PlanResource($plan);
-            return response()->json(['status'=>true, 'data'=>$plan],200);
+            return response()->json(['status'=>true,'message'=>'Get specific plan successfully!', 'data'=>$plan],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Not found !'],404);
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
     /**
      * Show the form for editing the specified resource.
@@ -89,9 +85,9 @@ class PlanController extends Controller
                 'area'=>$request->area,
                 'user_id'=>$request->user_id
             ]);
-            return response()->json(['status' =>true, 'message'=>'Updated successfully','data' => $plan],200);
+            return response()->json(['status' =>true, 'message'=>'Updated plan successfully','data' => $plan],200);
         }
-        return response()->json(['status' =>false, 'message' => 'Can not update !'],404);
+        return response()->json(['status' =>false, 'message' => 'Not found!'],404);
     }
 
     /**
@@ -101,8 +97,9 @@ class PlanController extends Controller
     {
         $plan = Plan::find($id);
         if($plan){
-            return response()->json(['status' =>true, 'message'=>'Deleted successfully'],200);
+            $plan->delete($plan);
+            return response()->json(['status' =>true, 'message'=>'Deleted plan successfully'],200);
         }
-        return response()->json(['status' =>false, 'message'=>'Can not delete'],404);
+        return response()->json(['status' =>false, 'message'=>'Not found!'],404);
     }
 }

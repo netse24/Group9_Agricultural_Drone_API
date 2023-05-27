@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LocationRequest;
 use App\Http\Resources\LocationResource;
 use App\Models\Location;
-use Illuminate\Http\Request;
-use Locale;
 
 class LocationController extends Controller
 {
@@ -17,7 +15,7 @@ class LocationController extends Controller
     {
         $locations = Location::all();
         $locations = LocationResource::collection($locations);
-        return response()->json(['status'=>true, 'data'=>$locations],200);
+        return response()->json(['status'=>true,'message'=>'Get locations successfully!', 'data'=>$locations],200);
     }
 
     /**
@@ -38,7 +36,7 @@ class LocationController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);
-        return response()->json(['status'=>true, 'message'=>'Created location successfully','data'=>$location],200);
+        return response()->json(['status'=>true, 'message'=>'Created location successfully!','data'=>$location],200);
     }
 
     /**
@@ -49,9 +47,9 @@ class LocationController extends Controller
         $location = Location::find($id);
         if($location){
             $location = new LocationResource($location);
-            return response()->json(['status'=>true, 'data'=>$location],200);
+            return response()->json(['status'=>true,'message'=>'Get specific location successfully!', 'data'=>$location],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Not found location !'],404);
+        return response()->json(['status'=>false, 'message'=>'Not found location!'],404);
     }
 
     /**
@@ -73,9 +71,9 @@ class LocationController extends Controller
                 'latitude'=>$request->latitude,
                 'longitude'=>$request->longitude
             ]);
-            return response()->json(['status'=>true, 'message'=>'Updated successfully', 'data'=>$location],200);
+            return response()->json(['status'=>true, 'message'=>'Updated location successfully!', 'data'=>$location],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Can not updated !', 'data'=>$location],404);
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
 
     /**
@@ -85,8 +83,9 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
         if($location){
-            return response()->json(['status'=>true, 'message'=>'Deleted successfully'],200);
+            $location->delete($location);
+            return response()->json(['status'=>true, 'message'=>'Deleted location successfully!'],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Can not delete !'],404);
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
 }

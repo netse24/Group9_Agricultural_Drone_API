@@ -14,7 +14,7 @@ class FarmController extends Controller
     {
         $farms = Farm::all();
         $farms = FarmResource::collection($farms);
-        return response()->json(['status'=>true,'message'=>'Get farms successfully !' ,'data'=>$farms],200);
+        return response()->json(['status'=>true,'message'=>'Get farms successfully!' ,'data'=>$farms],200);
     }
 
     /**
@@ -35,7 +35,7 @@ class FarmController extends Controller
             'user_id' => $request->user_id,
             'province_id' =>$request->province_id,
         ]);
-        return response()->json(['status'=>true,'message'=>'Created farm successfully' ,'data'=>$farm],200);
+        return response()->json(['status'=>true,'message'=>'Created farm successfully!' ,'data'=>$farm],200);
     }
 
     /**
@@ -46,9 +46,9 @@ class FarmController extends Controller
         $farm = Farm::find($id);
         if($farm){
             $farm= new FarmResource($farm);
-            return response()->json(['status'=>true,'message'=>'Get specific farm successfully !' ,'data'=>$farm],200);
+            return response()->json(['status'=>true,'message'=>'Get specific farm successfully!' ,'data'=>$farm],200);
         }
-        return response()->json(['status'=>false,'message'=>'Not found farm !'],404);
+        return response()->json(['status'=>false,'message'=>'Not found farm!'],404);
     }
 
     /**
@@ -71,9 +71,9 @@ class FarmController extends Controller
                 'province_id'=>$request->province_id,
                 'user_id'=>$request->user_id
             ]);
-            return response()->json(['status'=>true,'message'=>'Updated farm successfully !', 'data'=>$farm],200);
+            return response()->json(['status'=>true,'message'=>'Updated farm successfully!', 'data'=>$farm],200);
         }
-        return response()->json(['status'=>false,'message'=>'Not found !'],404);
+        return response()->json(['status'=>false,'message'=>'Not found!'],404);
     }
 
     /**
@@ -84,8 +84,8 @@ class FarmController extends Controller
         $farm = Farm::find($id);
         if($farm){
             $farm->delete($farm);
-            return response()->json(['status'=>true,'message'=>'Deleted farm successfully !'],200);
+            return response()->json(['status'=>true,'message'=>'Deleted farm successfully!'],200);
         }
-        return response()->json(['status'=>false,'message'=>'Not found !'],404);
+        return response()->json(['status'=>false,'message'=>'Not found!'],404);
     }
 }

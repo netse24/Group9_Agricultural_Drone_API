@@ -52,9 +52,9 @@ class MapController extends Controller
         $map = Map::find($id);
         if($map){
             $map = new MapResource($map);
-            return response()->json(['status' => true, 'data' =>$map], 200);
+            return response()->json(['status' => true,'message'=>'Get specific map successfully!', 'data' =>$map], 200);
         }
-        return response()->json(['status' => false, 'message' =>'Not found map !'], 404);
+        return response()->json(['status' => false, 'message' =>'Not found map!'], 404);
     }
 
     /**
@@ -67,9 +67,9 @@ class MapController extends Controller
         foreach ($images as $image) {
             if ($image->id === intval($id)) {
                 $new_image = new MapResource($image);
-                return response()->json(['status' => true, 'message' => 'Downloaded image successfully', 'data' => $new_image], 200);
+                return response()->json(['status' => true, 'message' => 'Downloaded image successfully!', 'data' => $new_image], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'Not found'], 401);
+                return response()->json(['status' => false, 'message' => 'Not found!'], 401);
             }
         }
     }
@@ -94,9 +94,9 @@ class MapController extends Controller
             if ($image->id === intval($img_id)) {
                 $image->image = $request->image;
                 $image->save();
-                return response()->json(['status' => true, 'message' => 'Image has created successfully', $image], 200);
+                return response()->json(['status' => true, 'message' => 'Image has created successfully!', $image], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'Not found'], 401);
+                return response()->json(['status' => false, 'message' => 'Not found!'], 401);
             }
         }
     }
@@ -112,9 +112,9 @@ class MapController extends Controller
             if ($image->id === intval($id)) {
                 $image->image = null;
                 $image->save();
-                return response()->json(['status' => true, 'message' => 'Image has removed successfully', $image], 200);
+                return response()->json(['status' => true, 'message' => 'Image has removed successfully!', $image], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'Not found'], 401);
+                return response()->json(['status' => false, 'message' => 'Not found!'], 401);
             }
         }
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProvinceRequest;
 use App\Http\Resources\ProvinceResource;
 use App\Models\Province;
-use Illuminate\Http\Request;
 
 class ProvinceController extends Controller
 {
@@ -16,7 +15,7 @@ class ProvinceController extends Controller
     {
         $provinces = Province::all();
         $provinces = ProvinceResource::collection($provinces);
-        return response()->json(['status'=>true, 'data'=>$provinces],200);
+        return response()->json(['status'=>true,'message'=>'Get provinces successfully!', 'data'=>$provinces],200);
     }
 
     /**
@@ -35,7 +34,7 @@ class ProvinceController extends Controller
         $province = Province::create([
             'name' => $request->name,
         ]);
-        return response()->json(['status'=>true, 'message'=>'Created successfully', 'data'=>$province],200);
+        return response()->json(['status'=>true, 'message'=>'Created province successfully!', 'data'=>$province],200);
     }
 
     /**
@@ -44,7 +43,7 @@ class ProvinceController extends Controller
     public function show($province_name)
     {
         $province = Province::where('name','like', $province_name)->first();
-        return response()->json(['status'=>true, 'data'=>$province],200);
+        return response()->json(['status'=>true,'message'=>'Get province by name successfully!', 'data'=>$province],200);
     }
 
     /**
@@ -54,9 +53,9 @@ class ProvinceController extends Controller
         $province = Province::find($province_id);
         if ($province){
             $province = new ProvinceResource($province);
-            return response()->json(['status'=>true, 'data'=>$province],200);
+            return response()->json(['status'=>true,'message'=>'Get specific province successfully!', 'data'=>$province],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Province not found'],404);
+        return response()->json(['status'=>false, 'message'=>'Province not found!'],404);
     }
     /**
      * Show the form for editing the specified resource.
@@ -76,9 +75,9 @@ class ProvinceController extends Controller
             $province->update([
                 'name'=>$request->name,
             ]);
-            return response()->json(['status'=>true, 'message'=>'Update successfully','data'=>$province],200);
+            return response()->json(['status'=>true, 'message'=>'Update province successfully!','data'=>$province],200);
         }
-        return response()->json(['status'=>false, 'message'=>'Can not update !'],404);
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
 
     /**
@@ -89,8 +88,8 @@ class ProvinceController extends Controller
         $province = Province::find($id);
         if ($province){
             $province->delete($province);
-            return response()->json(['status'=>true, 'message'=>"Deleted successfully"],200);
+            return response()->json(['status'=>true, 'message'=>'Deleted plan successfully!'],200);
         }
-        return response()->json(['status'=>false, 'message'=>"Can not delete !"],404);
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
 }

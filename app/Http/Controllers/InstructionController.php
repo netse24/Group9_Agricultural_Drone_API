@@ -20,7 +20,7 @@ class InstructionController extends Controller
     {
         $instructions = Instruction::all();
         $instructions = ShowInstructionResource::collection($instructions);
-        return response()->json(['status' => true,'Get instructions successfully!', 'data' => $instructions], 200);
+        return response()->json(['status' => true,'message'=>'Get instructions successfully!', 'data' => $instructions], 200);
     }
 
     /**

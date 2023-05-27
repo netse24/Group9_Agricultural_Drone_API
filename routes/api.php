@@ -30,12 +30,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // User 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::resource('users', UserController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // User logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // DRONES ROUTE 
+
     // get all drones, get a lcoatin of adrone... 
     Route::resource('drones', DroneController::class);
     // Show drone location
@@ -52,34 +54,28 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //post map image
     Route::post('maps/{province}/{id}', [MapController::class, 'updateDroneImage']);
 
-    // Provinces
+    // PROVINCES
     Route::resource('provinces', ProvinceController::class);
+    // Get province by id
+    Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);
 
-    // Farms
+    // FARMS
     Route::resource('farms', FarmController::class);
 
-    // Locations
+    // LOCATIONS
     Route::resource('locations', LocationController::class);
 
-    // Provinces
-    Route::resource('provinces', ProvinceController::class);
-
-    // Instructions
+    // INSTRUCTIONS
     Route::resource('instructions', InstructionController::class);
     // Update instruction
     Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
 
-    // plan 
-    Route::resource('plans', PlanController::class);
+    // PLAN
+    Route::resource('plans', PlanController::class);   
+    // Get plan by id
+    Route::get('/getPlan/{id}', [PlanController::class, 'showPlanBy']);
 });
 
 
 
-// Users
-Route::resource('users', UserController::class);
 
-// Get province by id
-Route::get('/getProvince/{id}', [ProvinceController::class, 'showById']);
-
-// Get plan by id
-Route::get('/getPlan/{id}', [PlanController::class, 'showPlanBy']);
