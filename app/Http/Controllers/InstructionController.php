@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InstructionRequest;
 use App\Http\Resources\ShowInstructionResource;
-use App\Http\Resources\DroneResource;
 use App\Http\Resources\InstructionResource;
 use App\Http\Resources\ShowDroneIntructionResource;
 use App\Http\Resources\ShowOnlyIntructionResource;
@@ -53,7 +52,7 @@ class InstructionController extends Controller
         $instruction = Instruction::find($id);
         if($instruction){
             $instruction= new InstructionResource($instruction);
-            return response()->json(['status' =>true, 'data'=>$instruction],200);
+            return response()->json(['status' =>true,'message'=>'Get specific instruction successfully!', 'data'=>$instruction],200);
         }
         return response()->json(['status' =>false, 'message'=>'Not found instruction!'],404);
     }
@@ -69,10 +68,22 @@ class InstructionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($request, Instruction $instruction)
+    public function update(InstructionRequest $request,string $id)
     {
-        // $instruction  =  
+        $instruction = Instruction::find($id);
+        if($instruction){
+            $instruction->update([
+                'instruction'=>$request->instruction,
+                'drone_id'=>$request->drone_id,
+                'plan_id'=>$request->plan_id
+            ]);
+            return response()->json(['status'=>true, 'message'=>'Updated instruction successfully!'],200);
+        } 
+        return response()->json(['status'=>false, 'message'=>'Not found!'],404);
     }
+    /**
+     * Delete the specified resource
+     */
     public function updateInstruction($drone, $id, Request $request)
     {
         $drone  =  Drone::where('drone_name', 'like', $drone)->first();
@@ -85,27 +96,26 @@ class InstructionController extends Controller
                 return response()->json(
                     [
                         'status' => true,
-                        'message' => 'Updated instruction successfully',
+                        'message' => 'Updated instruction successfully!',
                         'data updated' => $instruction
                     ],
                     200
                 );
             }
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'not found',
-                ],
-                401
-            );
+            return response()->json(['status' => false,'message' => 'Not found!',],401);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Instruction $instruction)
+    public function destroy(string $id)
     {
-        //
+        $instruction = Instruction::find($id);
+        if($instruction){
+            $instruction->delete();
+            return response()->json(['status' =>true,'message' => 'Deleted instruction successfully!'],200);
+        }
+        return response()->json(['status' =>false,'message' => 'Not found!'],404);
     }
 }
