@@ -31,7 +31,7 @@ class PlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type_job'=>'required',
+            'name'=>'required',
             'date_time'=>'required',
             'area'=>'required',
             'user_id'=>'required',

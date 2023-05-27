@@ -34,7 +34,7 @@ class PlanController extends Controller
     public function store(PlanRequest $request)
     {
         $plan = Plan::create([
-            'type_job' => $request->type_job,
+            'name' => $request->name,
             'date_time' => $request->date_time,
             'area' => $request->area,
             'user_id' => $request->user_id,
@@ -47,7 +47,7 @@ class PlanController extends Controller
      */
     public function show($plan)
     {
-        $plan = Plan::where('type_job', 'like', $plan)->first();
+        $plan = Plan::where('name', 'like', $plan)->first();
         $plan = new  ShowPlanResource($plan);
         return response()->json(['status'=>true,'message' => 'Get plan by name successfully!', 'data' => $plan], 200);
     }
@@ -80,7 +80,7 @@ class PlanController extends Controller
         $plan = Plan::find($id);
         if($plan){
             $plan->update([
-                'type_job'=>$request->type_job,
+                'name'=>$request->name,
                 'date_time'=>$request->date_time,
                 'area'=>$request->area,
                 'user_id'=>$request->user_id

@@ -14,7 +14,7 @@ class Plan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type_job',
+        'name',
         'date_time',
         'area',
         'user_id',

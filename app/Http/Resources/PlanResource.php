@@ -16,7 +16,7 @@ class PlanResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'type_job'=>$this->type_job,
+            'name'=>$this->name,
             'date_time'=>$this->date_time,
             'area'=>$this->area,
             'user'=> new UserResource($this->user)

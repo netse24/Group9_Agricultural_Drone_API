@@ -15,7 +15,7 @@ class ShowPlanResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->type_job,
+            'name' => $this->name,
             'date_time' => $this->date_time,
             'area' => $this->area,
             'instructions' => InstructionResource::collection($this->instructions)

@@ -41,18 +41,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // get all drones, get a lcoatin of adrone... 
     Route::resource('drones', DroneController::class);
     // Show drone location
-    Route::get('drones/{name}/location', [DroneController::class, 'showDroneLocation']);
+    Route::get('/drones/{name}/location', [DroneController::class, 'showDroneLocation']);
     // Get instructions of drone by id
     Route::get('/getInstructions/{id}', [DroneController::class, 'showInstructions']);
 
     // MAPS
     Route::resource('maps', MapController::class);
     // download map image
-    Route::get('maps/{province}/{id}', [MapController::class, 'download']);
+    Route::get('/maps/{province}/{id}', [MapController::class, 'download']);
     //delete map image
-    Route::delete('maps/{province}/{id}', [MapController::class, 'destroyImage']);
+    Route::delete('/maps/{province}/{id}', [MapController::class, 'destroyImage']);
     //post map image
-    Route::post('maps/{province}/{id}', [MapController::class, 'addDroneImage']);
+    Route::post('/maps/{province}/{id}', [MapController::class, 'addDroneImage']);
 
     // PROVINCES
     Route::resource('provinces', ProvinceController::class);
@@ -68,7 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // INSTRUCTIONS
     Route::resource('instructions', InstructionController::class);
     // Update instruction
-    Route::put('drone/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
+    Route::put('/drones/{drone_name}/{instruction_id}', [InstructionController::class, 'updateInstruction']);
 
     // PLAN
     Route::resource('plans', PlanController::class);   
